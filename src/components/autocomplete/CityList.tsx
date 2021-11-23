@@ -16,17 +16,19 @@ const CityList: React.FC<Props> = ({
 }) => {
   const firstFiveCities = cities
     .slice(0, 5)
-    .map((city) => (
+    .map((city, index) => (
       <CityListItem
         city={city.localizedName}
+        country={city.country.localizedName}
         setLocation={setLocation}
         getLocationByName={getLocationByName}
         key={city.key}
+        data-testid={`city-item-${index}`}
       />
     ));
 
   return (
-    <Box>
+    <Box data-testid="box-city-list">
       <Button variant="text" color="secondary">
         Current Location
       </Button>

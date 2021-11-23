@@ -3,12 +3,14 @@ import { Typography, Button } from "@mui/material";
 
 interface Props {
   city: string;
+  country: string;
   setLocation: (city: string) => void;
   getLocationByName: (city: string) => void;
 }
 
 const CityListItem: React.FC<Props> = ({
   city,
+  country,
   setLocation,
   getLocationByName,
 }) => {
@@ -22,7 +24,7 @@ const CityListItem: React.FC<Props> = ({
           getLocationByName(city);
         }}
       >
-        {city}
+        {city}/{country}
       </Typography>
     </Button>
   );
