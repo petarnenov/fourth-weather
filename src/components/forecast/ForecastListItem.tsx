@@ -31,10 +31,10 @@ const ForecastListItem: React.FC<Props> = ({ forecast }) => {
       <CardHeader title={forecast.list.city.name} subheader={forecast.date} />
       <CardContent>
         <Typography color="text.secondary" gutterBottom>
-          {forecast.list.dayForecast[0].weather[0].main}
+          {forecast?.list?.dayForecast[0]?.weather[0]?.main}
         </Typography>
         <Typography color="text.secondary" gutterBottom>
-          {forecast.list.dayForecast[0].weather[0].description}
+          {forecast?.list?.dayForecast[0]?.weather[0]?.description}
         </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
           more weather props
