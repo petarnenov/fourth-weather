@@ -27,6 +27,8 @@ forecast for a user-specified city. Allow users to drill into the hour detail fo
 
 ## Install project
 
+### In development mode
+
 1.  Clone and install repository 
 
 ```bash
@@ -38,3 +40,17 @@ npm start
 
 2. Open Browser and goto page:
    [5 Weather Days Forecast](http://localhost:3000)
+
+### In production mode
+
+1. Clone, install and build
+
+```bash
+git clone https://github.com/petarnenov/fourth-weather.git
+cd fourth-weather
+npm install
+npm run build
+```
+
+2. Copy build folder to corresponding production server folder
+
