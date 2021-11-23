@@ -3,6 +3,7 @@ import { Typography, Grid, LinearProgress, Box } from "@mui/material";
 import ForecastListItem from "./ForecastListItem";
 
 interface Props {
+  // TODO: change props name fulfilled,pending and rejected
   props: {
     fulfilled: FiveDayForecastFulfilledResponse | null;
     pending: boolean;
