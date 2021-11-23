@@ -5,17 +5,20 @@ import {
   Toolbar,
   IconButton,
   Typography,
-  Button,
   TextField,
+  Grid,
 } from "@mui/material";
 import WbSunnyIcon from "@mui/icons-material/WbSunny";
 import { useGetCitiesByAutoComplete, useGetLocationByCityName } from "../hooks";
+import ForecastList from "./forecast/ForecastList";
+import CityList from "./autocomplete/CityList";
 
 interface Props {}
 
 const NavBar: React.FC<Props> = () => {
   const [location, setLocation] = useState("");
-  const { data, apiGetLocationByName } = useGetLocationByCityName();
+  const { pending, fulfilled, rejected, apiGetLocationByName } =
+    useGetLocationByCityName();
   const { cities, apiGetCitiesByAutoComplete } = useGetCitiesByAutoComplete();
 
   useEffect(() => {
@@ -29,45 +32,63 @@ const NavBar: React.FC<Props> = () => {
     setLocation(value);
   };
 
-  const handleClickSearch = () => {
-    apiGetLocationByName(location);
+  const handleSetLocation = (city: string) => {
+    setLocation(city);
   };
 
-  console.log("data: ", data);
+  console.log("pending: ", pending);
+  console.log("rejected: ", rejected);
+  console.log("data: ", fulfilled);
   console.log("cities: ", cities);
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <WbSunnyIcon />
-          </IconButton>
-          <Typography variant="h6" component="div" sx={{ mr: 2 }}>
-            Fourth Weather
-          </Typography>
-          <TextField
-            id="outlined-basic"
-            label="Search location"
-            variant="outlined"
-            size="small"
-            color="secondary"
-            sx={{ mr: 2 }}
-            value={location}
-            onChange={handleChangeLocation}
-          />
-          <Button color="inherit" onClick={handleClickSearch}>
-            Search
-          </Button>
-        </Toolbar>
-      </AppBar>
-    </Box>
+    <>
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar position="static">
+          <Toolbar sx={{ height: 256 }}>
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ mr: 2 }}
+            >
+              <WbSunnyIcon />
+            </IconButton>
+            <Typography variant="h6" component="div" sx={{ mr: 2 }}>
+              Fourth Weather
+            </Typography>
+            <Grid
+              container
+              sx={{
+                flexDirection: "column",
+              }}
+            >
+              <Grid item>
+                <TextField
+                  id="outlined-basic"
+                  label="Search location"
+                  variant="outlined"
+                  size="small"
+                  color="secondary"
+                  sx={{ mr: 2 }}
+                  value={location}
+                  onChange={handleChangeLocation}
+                />
+              </Grid>
+              <Grid item>
+                <CityList
+                  cities={cities}
+                  setLocation={handleSetLocation}
+                  getLocationByName={apiGetLocationByName}
+                />
+              </Grid>
+            </Grid>
+          </Toolbar>
+        </AppBar>
+      </Box>
+      <ForecastList props={{ pending, fulfilled, rejected }} />
+    </>
   );
 };
 

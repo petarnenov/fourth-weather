@@ -1,15 +1,25 @@
 import { useCallback, useState } from "react";
 import { getCitiesByAutocomplete, getLocationByCityName } from "../api";
 
-// TODO: error handling
 export const useGetLocationByCityName = () => {
-  const [data, setData] = useState({});
+  const [pending, setPending] = useState(false);
+  const [fulfilled, setFulfilled] =
+    useState<FiveDayForecastFulfilledResponse | null>(null);
+  const [rejected, setRejected] = useState<string | null>(null);
 
-  const apiGetLocationByName = async (city: string) => {
+  const apiGetLocationByName = useCallback(async (city: string) => {
+    setPending(true);
+    setFulfilled(null);
+    setRejected(null);
     const data = await getLocationByCityName(city);
-    setData(data);
-  };
-  return { data, apiGetLocationByName };
+    setPending(false);
+    if (data.rejected) {
+      setRejected(data.rejected);
+      return;
+    }
+    setFulfilled(data.fulfilled);
+  }, []);
+  return { pending, fulfilled, rejected, apiGetLocationByName };
 };
 
 // TODO: error handling
