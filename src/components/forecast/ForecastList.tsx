@@ -1,5 +1,5 @@
 import React from "react";
-import { Typography, Grid } from "@mui/material";
+import { Typography, Grid, LinearProgress, Box } from "@mui/material";
 import ForecastListItem from "./ForecastListItem";
 
 interface Props {
@@ -44,7 +44,11 @@ const ForecastList: React.FC<Props> = ({ props }) => {
         </Typography>
       </Grid>
       <Grid item xs={12}>
-        {pending && <h5>Loading data...</h5>}
+        {pending && (
+          <Box sx={{ width: "100%" }}>
+            <LinearProgress />
+          </Box>
+        )}
       </Grid>
       <Grid item xs={12}>
         {rejected && <h5>Rejected reason: {rejected}</h5>}
