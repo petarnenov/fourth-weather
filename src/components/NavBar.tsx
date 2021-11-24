@@ -44,19 +44,6 @@ const NavBar: React.FC<Props> = () => {
   const { cities, apiGetCitiesByAutoComplete } = useGetCitiesByAutoComplete();
 
   useEffect(() => {
-    setLocation(forecastByCity?.city ? forecastByCity.city.name : "");
-    setFiveDayForecast(forecastByCity);
-  }, [forecastByCity]);
-
-  useEffect(() => {
-    setLoading(loadingForecastByCity);
-  }, [loadingForecastByCity]);
-
-  useEffect(() => {
-    setError(errorLoadingForecastByCity);
-  }, [errorLoadingForecastByCity]);
-
-  useEffect(() => {
     apiGetCitiesByAutoComplete(location);
   }, [location, apiGetCitiesByAutoComplete]);
 
