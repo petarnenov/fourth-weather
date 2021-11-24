@@ -31,13 +31,22 @@ const ForecastListItem: React.FC<Props> = ({ forecast }) => {
       <CardHeader title={forecast.list.city.name} subheader={forecast.date} />
       <CardContent>
         <Typography color="text.secondary" gutterBottom>
+          Sunrise: {new Date(forecast?.list?.city?.sunrise).toTimeString()}
+        </Typography>
+        <Typography color="text.secondary" gutterBottom>
+          Sunset: {new Date(forecast?.list?.city?.sunset).toTimeString()}
+        </Typography>
+        <Typography color="text.secondary" gutterBottom>
           {forecast?.list?.dayForecast[0]?.weather[0]?.main}
         </Typography>
         <Typography color="text.secondary" gutterBottom>
           {forecast?.list?.dayForecast[0]?.weather[0]?.description}
         </Typography>
-        <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          more weather props
+        <Typography color="text.secondary">
+          Wind speed: {forecast?.list?.dayForecast[0]?.wind?.speed}
+        </Typography>
+        <Typography color="text.secondary">
+          Clouds: {forecast?.list?.dayForecast[0]?.clouds?.all}
         </Typography>
       </CardContent>
       <CardActions>

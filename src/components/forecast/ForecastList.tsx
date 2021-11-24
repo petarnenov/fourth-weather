@@ -53,7 +53,7 @@ const ForecastList: React.FC<Props> = ({ props }) => {
       <Grid item xs={12}>
         {error && (
           <Typography variant="h5" align="center">
-            Can not get forecast, reason: {error}
+            Can not get forecast [reason: {error}]
           </Typography>
         )}
       </Grid>
