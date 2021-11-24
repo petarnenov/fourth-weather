@@ -43,5 +43,19 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "description": "## Exercise description",
+  "main": "index.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/petarnenov/fourth-weather.git"
+  },
+  "keywords": [],
+  "author": "petarnenovpetrov@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/petarnenov/fourth-weather/issues"
+  },
+  "homepage": "https://github.com/petarnenov/fourth-weather#readme"
 }
