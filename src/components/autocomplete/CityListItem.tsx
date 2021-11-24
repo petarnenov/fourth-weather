@@ -1,5 +1,5 @@
-import React from "react";
-import { Typography, Button } from "@mui/material";
+import React, { MouseEventHandler } from 'react';
+import { Typography, Button } from '@mui/material';
 
 interface Props {
   city: string;
@@ -14,15 +14,14 @@ const CityListItem: React.FC<Props> = ({
   setLocation,
   apiGetForecastByCity,
 }) => {
+  const handleClick: MouseEventHandler<HTMLButtonElement> = (e) => {
+    setLocation(city);
+    apiGetForecastByCity(city);
+  };
+
   return (
     <Button variant="text" color="inherit" size="small">
-      <Typography
-        variant="body1"
-        onClick={() => {
-          setLocation(city);
-          apiGetForecastByCity(city);
-        }}
-      >
+      <Typography variant="body1" onClick={handleClick}>
         {city}/{country}
       </Typography>
     </Button>
