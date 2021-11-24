@@ -45,8 +45,6 @@
     ]
   },
   "description": "## Exercise description",
-  "main": "index.js",
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/petarnenov/fourth-weather.git"
@@ -56,6 +54,5 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/petarnenov/fourth-weather/issues"
-  },
-  "homepage": "https://github.com/petarnenov/fourth-weather#readme"
+  }
 }

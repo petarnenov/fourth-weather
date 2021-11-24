@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, useEffect, useState } from "react";
+import React, { ChangeEventHandler, useEffect, useState } from 'react';
 import {
   Box,
   AppBar,
@@ -7,23 +7,71 @@ import {
   Typography,
   TextField,
   Grid,
-} from "@mui/material";
-import WbSunnyIcon from "@mui/icons-material/WbSunny";
-import { useGetCitiesByAutoComplete, useGetLocationByCityName } from "../hooks";
-import ForecastList from "./forecast/ForecastList";
-import CityList from "./autocomplete/CityList";
+} from '@mui/material';
+import WbSunnyIcon from '@mui/icons-material/WbSunny';
+import {
+  useGetCitiesByAutoComplete,
+  useGetForecastByCityName,
+  useGetForecastByGeoCoords,
+} from '../hooks';
+import ForecastList from './forecast/ForecastList';
+import CityList from './autocomplete/CityList';
 
 interface Props {}
 
 const NavBar: React.FC<Props> = () => {
-  const [location, setLocation] = useState("");
-  const { pending, fulfilled, rejected, apiGetLocationByName } =
-    useGetLocationByCityName();
+  const [location, setLocation] = useState('');
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const [fiveDayForecast, setFiveDayForecast] =
+    useState<FiveDayForecastFulfilledResponse | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  const {
+    loadingForecastByGeoCoords,
+    forecastByGeoCoords,
+    errorLoadingForecastByGeoCoords,
+    apiGetForecastByGeoCoords,
+  } = useGetForecastByGeoCoords();
+
+  const {
+    loadingForecastByCity,
+    forecastByCity,
+    errorLoadingForecastByCity,
+    apiGetForecastByCity,
+  } = useGetForecastByCityName();
+
   const { cities, apiGetCitiesByAutoComplete } = useGetCitiesByAutoComplete();
 
   useEffect(() => {
     apiGetCitiesByAutoComplete(location);
   }, [location, apiGetCitiesByAutoComplete]);
+
+  useEffect(() => {
+    setLocation(forecastByGeoCoords?.city ? forecastByGeoCoords.city.name : '');
+    setFiveDayForecast(forecastByGeoCoords);
+  }, [forecastByGeoCoords]);
+
+  // useEffect(() => {
+  //   setLoading(loadingForecastByGeoCoords);
+  // }, [loadingForecastByGeoCoords]);
+
+  // useEffect(() => {
+  //   setError(errorLoadingForecastByGeoCoords);
+  // }, [errorLoadingForecastByGeoCoords]);
+
+  useEffect(() => {
+    setLocation(forecastByCity?.city ? forecastByCity.city.name : '');
+    setFiveDayForecast(forecastByCity);
+  }, [forecastByCity]);
+
+  // useEffect(() => {
+  //   setLoading(loadingForecastByCity);
+  // }, [loadingForecastByCity]);
+
+  // useEffect(() => {
+  //   setError(errorLoadingForecastByCity);
+  // }, [errorLoadingForecastByCity]);
 
   const handleChangeLocation: ChangeEventHandler<
     HTMLInputElement | HTMLTextAreaElement
@@ -35,11 +83,6 @@ const NavBar: React.FC<Props> = () => {
   const handleSetLocation = (city: string) => {
     setLocation(city);
   };
-
-  console.log("pending: ", pending);
-  console.log("rejected: ", rejected);
-  console.log("data: ", fulfilled);
-  console.log("cities: ", cities);
 
   return (
     <>
@@ -61,7 +104,7 @@ const NavBar: React.FC<Props> = () => {
             <Grid
               container
               sx={{
-                flexDirection: "column",
+                flexDirection: 'column',
               }}
             >
               <Grid item>
@@ -80,14 +123,21 @@ const NavBar: React.FC<Props> = () => {
                 <CityList
                   cities={cities}
                   setLocation={handleSetLocation}
-                  getLocationByName={apiGetLocationByName}
+                  apiGetForecastByCity={apiGetForecastByCity}
+                  apiGetForecastByGeoCoords={apiGetForecastByGeoCoords}
                 />
               </Grid>
             </Grid>
           </Toolbar>
         </AppBar>
       </Box>
-      <ForecastList props={{ pending, fulfilled, rejected }} />
+      <ForecastList
+        props={{
+          loading,
+          fiveDayForecast,
+          error,
+        }}
+      />
     </>
   );
 };

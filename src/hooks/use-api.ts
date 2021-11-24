@@ -1,17 +1,22 @@
-import { useCallback, useState } from "react";
-import { getCitiesByAutocomplete, getLocationByCityName } from "../api";
+import { useCallback, useState } from 'react';
+import {
+  getCitiesByAutocomplete,
+  getForecastByCityName,
+  getForecastByGeoCoords,
+  GeoCoords,
+} from '../api';
 
-export const useGetLocationByCityName = () => {
+export const useGetForecastByCityName = () => {
   const [pending, setPending] = useState(false);
   const [fulfilled, setFulfilled] =
     useState<FiveDayForecastFulfilledResponse | null>(null);
   const [rejected, setRejected] = useState<string | null>(null);
 
-  const apiGetLocationByName = useCallback(async (city: string) => {
+  const apiGetForecastByCity = useCallback(async (city: string) => {
     setPending(true);
     setFulfilled(null);
     setRejected(null);
-    const data = await getLocationByCityName(city);
+    const data = await getForecastByCityName(city);
     setPending(false);
     if (data.rejected) {
       setRejected(data.rejected);
@@ -19,7 +24,38 @@ export const useGetLocationByCityName = () => {
     }
     setFulfilled(data.fulfilled);
   }, []);
-  return { pending, fulfilled, rejected, apiGetLocationByName };
+  return {
+    loadingForecastByCity: pending,
+    forecastByCity: fulfilled,
+    errorLoadingForecastByCity: rejected,
+    apiGetForecastByCity,
+  };
+};
+
+export const useGetForecastByGeoCoords = () => {
+  const [pending, setPending] = useState(false);
+  const [fulfilled, setFulfilled] =
+    useState<FiveDayForecastFulfilledResponse | null>(null);
+  const [rejected, setRejected] = useState<string | null>(null);
+
+  setPending(true);
+  setFulfilled(null);
+  setRejected(null);
+  const apiGetForecastByGeoCoords = useCallback(async (coords: GeoCoords) => {
+    const data = await getForecastByGeoCoords(coords);
+    if (data.rejected) {
+      setRejected(data.rejected);
+      return;
+    }
+    setFulfilled(data.fulfilled);
+  }, []);
+
+  return {
+    loadingForecastByGeoCoords: pending,
+    forecastByGeoCoords: fulfilled,
+    errorLoadingForecastByGeoCoords: rejected,
+    apiGetForecastByGeoCoords,
+  };
 };
 
 // TODO: error handling

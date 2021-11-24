@@ -1,33 +1,30 @@
-import React from "react";
-import { Typography, Grid, LinearProgress, Box } from "@mui/material";
-import ForecastListItem from "./ForecastListItem";
+import React from 'react';
+import { Typography, Grid, LinearProgress, Box } from '@mui/material';
+import ForecastListItem from './ForecastListItem';
 
 interface Props {
-  // TODO: change props name fulfilled,pending and rejected
   props: {
-    fulfilled: FiveDayForecastFulfilledResponse | null;
-    pending: boolean;
-    rejected: string | null;
+    fiveDayForecast: FiveDayForecastFulfilledResponse | null;
+    loading: boolean;
+    error: string | null;
   };
 }
 
 const ForecastList: React.FC<Props> = ({ props }) => {
-  const { pending, fulfilled, rejected } = props;
+  const { loading, fiveDayForecast, error } = props;
 
   const forecastByNextFiveDays = Array.from(
-    fulfilled?.list?.reduce((acc, fl) => {
-      const flDate = fl.dt_txt.split(" ")[0];
+    fiveDayForecast?.list?.reduce((acc, fl) => {
+      const flDate = fl.dt_txt.split(' ')[0];
       if (acc.has(flDate)) {
         acc.get(flDate)?.dayForecast.push(fl);
       } else {
-        acc.set(flDate, { city: fulfilled.city, dayForecast: [] });
+        acc.set(flDate, { city: fiveDayForecast.city, dayForecast: [] });
       }
       return acc;
     }, new Map<string, { city: ForecastCity; dayForecast: ForecastList[] }>()) ||
       new Map()
   );
-
-  console.log("dd lists: ", forecastByNextFiveDays);
 
   const gridItems = forecastByNextFiveDays.map((dayForecast) => (
     <Grid item xs={12} md={4} lg={2} key={dayForecast[0]}>
@@ -40,21 +37,25 @@ const ForecastList: React.FC<Props> = ({ props }) => {
   return (
     <Grid container spacing={2} justifyContent="center">
       <Grid item xs={12}>
-        {fulfilled && (
+        {fiveDayForecast && (
           <Typography variant="h5" align="center">
             5 Days Forecast
           </Typography>
         )}
       </Grid>
       <Grid item xs={12}>
-        {pending && (
-          <Box sx={{ width: "100%" }}>
+        {loading && (
+          <Box sx={{ width: '100%' }}>
             <LinearProgress />
           </Box>
         )}
       </Grid>
       <Grid item xs={12}>
-        {rejected && <h5>Rejected reason: {rejected}</h5>}
+        {error && (
+          <Typography variant="h5" align="center">
+            Can not get forecast, reason: {error}
+          </Typography>
+        )}
       </Grid>
       {gridItems}
     </Grid>
