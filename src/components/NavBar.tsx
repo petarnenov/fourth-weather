@@ -9,7 +9,7 @@ import {
   Grid,
 } from "@mui/material";
 import WbSunnyIcon from "@mui/icons-material/WbSunny";
-import { useGetCitiesByAutoComplete, useGetLocationByCityName } from "../hooks";
+import { useGetCitiesByAutoComplete, useGetForecastByCityName } from "../hooks";
 import ForecastList from "./forecast/ForecastList";
 import CityList from "./autocomplete/CityList";
 
@@ -17,9 +17,32 @@ interface Props {}
 
 const NavBar: React.FC<Props> = () => {
   const [location, setLocation] = useState("");
-  const { pending, fulfilled, rejected, apiGetLocationByName } =
-    useGetLocationByCityName();
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const [fiveDayForecast, setFiveDayForecast] =
+    useState<FiveDayForecastFulfilledResponse | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  const {
+    loadingForecastByCity,
+    forecastByCity,
+    errorLoadingForecastByCity,
+    apiGetForecastByCity,
+  } = useGetForecastByCityName();
   const { cities, apiGetCitiesByAutoComplete } = useGetCitiesByAutoComplete();
+
+  useEffect(() => {
+    setLocation(forecastByCity?.city ? forecastByCity.city.name : "");
+    setFiveDayForecast(forecastByCity);
+  }, [forecastByCity]);
+
+  useEffect(() => {
+    setLoading(loadingForecastByCity);
+  }, [loadingForecastByCity]);
+
+  useEffect(() => {
+    setError(errorLoadingForecastByCity);
+  }, [errorLoadingForecastByCity]);
 
   useEffect(() => {
     apiGetCitiesByAutoComplete(location);
@@ -35,11 +58,6 @@ const NavBar: React.FC<Props> = () => {
   const handleSetLocation = (city: string) => {
     setLocation(city);
   };
-
-  console.log("pending: ", pending);
-  console.log("rejected: ", rejected);
-  console.log("data: ", fulfilled);
-  console.log("cities: ", cities);
 
   return (
     <>
@@ -80,14 +98,14 @@ const NavBar: React.FC<Props> = () => {
                 <CityList
                   cities={cities}
                   setLocation={handleSetLocation}
-                  getLocationByName={apiGetLocationByName}
+                  apiGetForecastByCity={apiGetForecastByCity}
                 />
               </Grid>
             </Grid>
           </Toolbar>
         </AppBar>
       </Box>
-      <ForecastList props={{ pending, fulfilled, rejected }} />
+      <ForecastList props={{ loading, fiveDayForecast, error }} />
     </>
   );
 };

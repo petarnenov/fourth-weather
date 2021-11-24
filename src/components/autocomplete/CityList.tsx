@@ -6,13 +6,13 @@ import CityListItem from "./CityListItem";
 interface Props {
   cities: AutocompleteCityResponse[];
   setLocation: (city: string) => void;
-  getLocationByName: (city: string) => void;
+  apiGetForecastByCity: (city: string) => void;
 }
 
 const CityList: React.FC<Props> = ({
   cities,
   setLocation,
-  getLocationByName,
+  apiGetForecastByCity,
 }) => {
   const firstFiveCities = cities
     .slice(0, 5)
@@ -21,7 +21,7 @@ const CityList: React.FC<Props> = ({
         city={city.localizedName}
         country={city.country.localizedName}
         setLocation={setLocation}
-        getLocationByName={getLocationByName}
+        apiGetForecastByCity={apiGetForecastByCity}
         key={city.key}
         data-testid={`city-item-${index}`}
       />

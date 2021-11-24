@@ -5,23 +5,22 @@ interface Props {
   city: string;
   country: string;
   setLocation: (city: string) => void;
-  getLocationByName: (city: string) => void;
+  apiGetForecastByCity: (city: string) => void;
 }
 
 const CityListItem: React.FC<Props> = ({
   city,
   country,
   setLocation,
-  getLocationByName,
+  apiGetForecastByCity,
 }) => {
   return (
     <Button variant="text" color="inherit" size="small">
       <Typography
         variant="body1"
         onClick={() => {
-          if (!city.trim()) return;
           setLocation(city);
-          getLocationByName(city);
+          apiGetForecastByCity(city);
         }}
       >
         {city}/{country}
