@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, useEffect, useState } from 'react';
+import React, { ChangeEventHandler, useEffect, useState } from "react";
 import {
   Box,
   AppBar,
@@ -7,20 +7,20 @@ import {
   Typography,
   TextField,
   Grid,
-} from '@mui/material';
-import WbSunnyIcon from '@mui/icons-material/WbSunny';
+} from "@mui/material";
+import WbSunnyIcon from "@mui/icons-material/WbSunny";
 import {
   useGetCitiesByAutoComplete,
   useGetForecastByCityName,
   useGetForecastByGeoCoords,
-} from '../hooks';
-import ForecastList from './forecast/ForecastList';
-import CityList from './autocomplete/CityList';
+} from "../hooks";
+import ForecastList from "./forecast/ForecastList";
+import CityList from "./autocomplete/CityList";
 
 interface Props {}
 
 const NavBar: React.FC<Props> = () => {
-  const [location, setLocation] = useState('');
+  const [location, setLocation] = useState("");
 
   const [loading, setLoading] = useState<boolean>(false);
   const [fiveDayForecast, setFiveDayForecast] =
@@ -61,30 +61,30 @@ const NavBar: React.FC<Props> = () => {
   }, [location, apiGetCitiesByAutoComplete]);
 
   useEffect(() => {
-    setLocation(forecastByGeoCoords?.city ? forecastByGeoCoords.city.name : '');
+    setLocation(forecastByGeoCoords?.city ? forecastByGeoCoords.city.name : "");
     setFiveDayForecast(forecastByGeoCoords);
   }, [forecastByGeoCoords]);
 
-  // useEffect(() => {
-  //   setLoading(loadingForecastByGeoCoords);
-  // }, [loadingForecastByGeoCoords]);
-
-  // useEffect(() => {
-  //   setError(errorLoadingForecastByGeoCoords);
-  // }, [errorLoadingForecastByGeoCoords]);
+  useEffect(() => {
+    setLoading(loadingForecastByGeoCoords);
+  }, [loadingForecastByGeoCoords]);
 
   useEffect(() => {
-    setLocation(forecastByCity?.city ? forecastByCity.city.name : '');
+    setError(errorLoadingForecastByGeoCoords);
+  }, [errorLoadingForecastByGeoCoords]);
+
+  useEffect(() => {
+    setLocation(forecastByCity?.city ? forecastByCity.city.name : "");
     setFiveDayForecast(forecastByCity);
   }, [forecastByCity]);
 
-  // useEffect(() => {
-  //   setLoading(loadingForecastByCity);
-  // }, [loadingForecastByCity]);
+  useEffect(() => {
+    setLoading(loadingForecastByCity);
+  }, [loadingForecastByCity]);
 
-  // useEffect(() => {
-  //   setError(errorLoadingForecastByCity);
-  // }, [errorLoadingForecastByCity]);
+  useEffect(() => {
+    setError(errorLoadingForecastByCity);
+  }, [errorLoadingForecastByCity]);
 
   const handleChangeLocation: ChangeEventHandler<
     HTMLInputElement | HTMLTextAreaElement
@@ -117,7 +117,7 @@ const NavBar: React.FC<Props> = () => {
             <Grid
               container
               sx={{
-                flexDirection: 'column',
+                flexDirection: "column",
               }}
             >
               <Grid item>

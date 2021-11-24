@@ -1,5 +1,5 @@
-import React, { MouseEventHandler } from 'react';
-import { Typography, Button } from '@mui/material';
+import React, { MouseEventHandler } from "react";
+import { Typography, Button } from "@mui/material";
 
 interface Props {
   city: string;

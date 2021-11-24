@@ -1,6 +1,6 @@
-import React from 'react';
-import { Typography, Grid, LinearProgress, Box } from '@mui/material';
-import ForecastListItem from './ForecastListItem';
+import React from "react";
+import { Typography, Grid, LinearProgress, Box } from "@mui/material";
+import ForecastListItem from "./ForecastListItem";
 
 interface Props {
   props: {
@@ -15,7 +15,7 @@ const ForecastList: React.FC<Props> = ({ props }) => {
 
   const forecastByNextFiveDays = Array.from(
     fiveDayForecast?.list?.reduce((acc, fl) => {
-      const flDate = fl.dt_txt.split(' ')[0];
+      const flDate = fl.dt_txt.split(" ")[0];
       if (acc.has(flDate)) {
         acc.get(flDate)?.dayForecast.push(fl);
       } else {
@@ -45,7 +45,7 @@ const ForecastList: React.FC<Props> = ({ props }) => {
       </Grid>
       <Grid item xs={12}>
         {loading && (
-          <Box sx={{ width: '100%' }}>
+          <Box sx={{ width: "100%" }}>
             <LinearProgress />
           </Box>
         )}

@@ -1,8 +1,8 @@
-import { Button } from '@mui/material';
-import { Box } from '@mui/system';
-import React, { MouseEventHandler } from 'react';
-import { GeoCoords } from '../../api';
-import CityListItem from './CityListItem';
+import { Button } from "@mui/material";
+import { Box } from "@mui/system";
+import React, { MouseEventHandler } from "react";
+import { GeoCoords } from "../../api";
+import CityListItem from "./CityListItem";
 
 interface Props {
   cities: AutocompleteCityResponse[];
