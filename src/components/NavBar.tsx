@@ -9,7 +9,7 @@ import {
   Grid,
 } from "@mui/material";
 import WbSunnyIcon from "@mui/icons-material/WbSunny";
-import { useGetCitiesByAutoComplete, useGetForecastByCityName } from "../hooks";
+import { useGetCitiesByAutoComplete, useGetForecastByCityName, useGetForecastByGeoCoords } from "../hooks";
 import ForecastList from "./forecast/ForecastList";
 import CityList from "./autocomplete/CityList";
 
@@ -29,6 +29,15 @@ const NavBar: React.FC<Props> = () => {
     errorLoadingForecastByCity,
     apiGetForecastByCity,
   } = useGetForecastByCityName();
+
+  const {
+    loadingForecastByGeoCoords,
+    forecastByGeoCoords,
+    errorLoadingForecastByGeoCoords,
+    apiGetForecastByGeoCoords,
+  } = useGetForecastByGeoCoords();
+
+
   const { cities, apiGetCitiesByAutoComplete } = useGetCitiesByAutoComplete();
 
   useEffect(() => {

@@ -1,5 +1,10 @@
 import { useCallback, useState } from "react";
-import { getCitiesByAutocomplete, getLocationByCityName } from "../api";
+import {
+  GeoCoords,
+  getCitiesByAutocomplete,
+  getForecastByGeoCoords,
+  getLocationByCityName,
+} from "../api";
 
 export const useGetForecastByCityName = () => {
   const [pending, setPending] = useState(false);
@@ -24,6 +29,32 @@ export const useGetForecastByCityName = () => {
     forecastByCity: fulfilled,
     errorLoadingForecastByCity: rejected,
     apiGetForecastByCity,
+  };
+};
+
+export const useGetForecastByGeoCoords = () => {
+  const [pending, setPending] = useState(false);
+  const [fulfilled, setFulfilled] =
+    useState<FiveDayForecastFulfilledResponse | null>(null);
+  const [rejected, setRejected] = useState<string | null>(null);
+
+  const apiGetForecastByGeoCoords = useCallback(async (coords: GeoCoords) => {
+    setPending(true);
+    setFulfilled(null);
+    setRejected(null);
+    const data = await getForecastByGeoCoords(coords);
+    if (data.rejected) {
+      setRejected(data.rejected);
+      return;
+    }
+    setFulfilled(data.fulfilled);
+  }, []);
+
+  return {
+    loadingForecastByGeoCoords: pending,
+    forecastByGeoCoords: fulfilled,
+    errorLoadingForecastByGeoCoords: rejected,
+    apiGetForecastByGeoCoords,
   };
 };
 
