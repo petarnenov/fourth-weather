@@ -1,11 +1,14 @@
-import { CssBaseline } from "@mui/material";
+import { theme } from "./style/custom-theme";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import NavBar from "./components/NavBar";
 
 function App() {
   return (
     <>
       <CssBaseline />
-      <NavBar />
+      <ThemeProvider theme={theme}>
+        <NavBar />
+      </ThemeProvider>
     </>
   );
 }

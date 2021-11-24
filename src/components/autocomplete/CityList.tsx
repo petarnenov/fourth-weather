@@ -29,7 +29,7 @@ const CityList: React.FC<Props> = ({
 
   return (
     <Box data-testid="box-city-list">
-      <Button variant="text" color="secondary">
+      <Button variant="text" color="inherit">
         Current Location
       </Button>
       {firstFiveCities}

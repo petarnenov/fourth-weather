@@ -15,7 +15,7 @@ const CityListItem: React.FC<Props> = ({
   getLocationByName,
 }) => {
   return (
-    <Button variant="text" color="secondary" size="small">
+    <Button variant="text" color="inherit" size="small">
       <Typography
         variant="body1"
         onClick={() => {

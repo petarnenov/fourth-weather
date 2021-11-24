@@ -70,10 +70,10 @@ const NavBar: React.FC<Props> = () => {
                   label="Search location"
                   variant="outlined"
                   size="small"
-                  color="secondary"
                   sx={{ mr: 2 }}
                   value={location}
                   onChange={handleChangeLocation}
+                  color="secondary"
                 />
               </Grid>
               <Grid item>
