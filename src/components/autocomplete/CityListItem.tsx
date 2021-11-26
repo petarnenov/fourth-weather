@@ -22,7 +22,7 @@ const CityListItem: React.FC<Props> = ({
   return (
     <Button variant="text" color="inherit" size="small">
       <Typography variant="body1" onClick={handleClick}>
-        {city}/{country}
+        {city}, {country}
       </Typography>
     </Button>
   );
