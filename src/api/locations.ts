@@ -1,6 +1,6 @@
 import { apiConfig } from ".";
 
-interface GetLocationByCity {
+export interface GetLocationByCity {
   rejected: string | null;
   fulfilled: FiveDayForecastFulfilledResponse | null;
 }
