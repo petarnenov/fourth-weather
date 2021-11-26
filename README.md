@@ -29,7 +29,7 @@ forecast for a user-specified city. Allow users to drill into the hour detail fo
 
 ### In development mode
 
-1.  Clone and install repository 
+1.  Clone and install repository
 
 ```bash
 git clone https://github.com/petarnenov/fourth-weather.git
@@ -54,3 +54,16 @@ npm run build
 
 2. Copy build folder to corresponding production server folder
 
+## Test project
+
+### Run tests
+
+```bash
+npm test
+```
+
+### Run test coverage
+
+```bash
+npm run test:coverage
+```
